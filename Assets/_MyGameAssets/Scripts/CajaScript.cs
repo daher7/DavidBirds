@@ -14,7 +14,6 @@ public class CajaScript : MonoBehaviour {
     }
 
     private void MostrarPuntuacion() {
-
-        GameObject puntuacion = Instantiate(pfPuntuacion, transform.position, transform.rotation);
+        GameObject puntuacion = Instantiate(pfPuntuacion, transform.position, Quaternion.identity);
     }
 }
