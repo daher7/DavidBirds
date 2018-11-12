@@ -9,7 +9,7 @@ public class PajaroScript : MonoBehaviour {
     Touch[] pulsaciones;
     Vector2 posicionInicial;
     Vector2 posicionFinal;
-    public int force = 500;
+    public int maxForce = 1000;
     bool pajaroPulsado = false;
 
     private void Update() {
@@ -77,11 +77,14 @@ public class PajaroScript : MonoBehaviour {
             transform.position = posicionConvertida;
             posicionFinal = posicionConvertida;
             // Calculamos la direccion
-            Vector2 direccion = (posicionInicial - posicionFinal).normalized;
+            Vector2 vectorDistancia = (posicionInicial - posicionFinal);
+            Vector2 vectorDireccion = vectorDistancia.normalized;
+            float distanca = vectorDistancia.magnitude;
+            
             // Ponemos el rigidbody2d en modo cinematico
             GetComponent<Rigidbody2D>().isKinematic = false;
             // Le damos el empujon
-            GetComponent<Rigidbody2D>().AddRelativeForce(direccion * force);
+            GetComponent<Rigidbody2D>().AddRelativeForce(vectorDireccion * distanca * maxForce);
         }
     }
 
@@ -91,7 +94,7 @@ public class PajaroScript : MonoBehaviour {
 
     private bool ComprobarPulsacionObjetoByName(Touch _t, string _name) {
         bool estaPulsado = false;
-        //Posición del touch en función del del mundo
+        //Posición del touch en función de la del mundo
         Vector3 touchWorldPosition = getWorldPosition(_t);
         //Obtención del objeto pulsado
         RaycastHit2D rch2d = Physics2D.Raycast(Camera.main.transform.position, touchWorldPosition);
@@ -100,5 +103,5 @@ public class PajaroScript : MonoBehaviour {
             estaPulsado = true;
         }
         return estaPulsado;
-    }
+    }
 }
